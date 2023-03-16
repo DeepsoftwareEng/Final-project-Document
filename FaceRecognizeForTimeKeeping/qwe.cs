@@ -8,5 +8,6 @@ namespace FaceRecognizeForTimeKeeping
 {
     internal class qwe
     {
+        Console.WriteLine();
     }
 }
