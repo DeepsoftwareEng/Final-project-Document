@@ -1,5 +1,5 @@
 # FaceRecognizeForTimeKeeping
-Write in C#
+# Write in C#
 Member: 
     DeepSoftwareEng- Nguyen Phuc Hung
     Emhung- Nguyen Quang Hung
