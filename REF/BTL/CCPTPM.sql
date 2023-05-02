@@ -1,6 +1,6 @@
 ﻿use master
-create database CCPTPM
 drop database CCPTPM
+create database CCPTPM
 
 use CCPTPM
 create table Faculty(
@@ -27,12 +27,12 @@ create table WorkerList(
 	Foreign key (fid) References Faculty(id_faculty)
 )
 create table Attendance(
-	id int not null,
+	id int not null primary key,
+	id_worker int not null,
 	d_m datetime not null,
 	id_faculty nvarchar(50),
 	shift_worked int,
-	primary key(id, d_m),
-	foreign key (id) References WorkerList(id),
+	foreign key (id_worker) References WorkerList(id),
 	foreign key (id_faculty) References Faculty(id_faculty)
 )
 create table ListEmail(
@@ -61,11 +61,15 @@ Insert into WorkerList values(1, 'Nguyen Hung', '2002-07-25', 'Hung01', 'CNTT01'
 							 (2, 'Nguyen Khanh Tho', '2002-12-10', 'Tho01', 'CNTT01'),
 							 (3, 'Dinh Anh Quan', '2002-12-10', 'Quan01', 'CNTT01'),
 							 (4, 'Nguyen Phuc', '2002-05-27', 'Phuc02', 'CSKH01')
-insert into Attendance values (1, '2023-04-03','CNTT01',1),
-							  (2, '2023-04-03','CNTT01',1),
-							  (3, '2023-04-03','CNTT01',1),
-							  (4, '2023-04-03','CNTT01',1),
-							  (1, '2023-04-04','CNTT01',1)
+insert into Attendance values (1,1, '2023-04-03','CNTT01',1),
+							  (2,2, '2023-04-03','CNTT01',1),
+							  (3,3, '2023-04-03','CNTT01',1),
+							  (4,4, '2023-04-03','CNTT01',1),
+							  (5,1, '2023-04-03','CNTT01',2),
+							  (6,2, '2023-04-03','CNTT01',2),
+							  (7,3, '2023-04-03','CNTT01',2),
+							  (8,4, '2023-04-03','CNTT01',2)
+
 insert into ListEmail values ('khanhtho10122002@gmail.com',N'Nguyễn Khánh Thọ - trưởng phòng CNTT1')
 
 Select Count(1) from Account where username ='admin1' and passwords='admin1'
