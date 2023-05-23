@@ -50,6 +50,7 @@ create table LateList(
 	id_faculty nvarchar(50),
 	d_m date not null,
 	shift_worked int,
+	detail nvarchar(50),
 	foreign key (id_worker) References WorkerList(id),
 )
 /*
