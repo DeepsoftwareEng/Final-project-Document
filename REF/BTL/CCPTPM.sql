@@ -14,9 +14,7 @@ create table Account(
 	gmail nvarchar(30),
 	images nvarchar(30),
 	fid nvarchar(50),
-	constraint fk_Account_Faculty
-	Foreign key (fid)
-	References Faculty(id_faculty)
+	Foreign key (fid) References Faculty(id_faculty)
 )
 create table WorkerList(
 	id int not null primary key,
@@ -39,25 +37,60 @@ create table ListEmail(
 	email nvarchar(50) primary key,
 	describe nvarchar(50)
 )
+create table Request(
+	id int primary key Identity(1,1),
+	id_attendance int not null,
+	detail nvarchar(50),
+	states nvarchar(50),
+	foreign key(id_attendance) References Attendance(id)
+)
+create table LateList(
+	id int primary key Identity(1,1),
+	id_worker int not null,
+	id_faculty nvarchar(50),
+	d_m date not null,
+	shift_worked int,
+	foreign key (id_worker) References WorkerList(id),
+)
 /*
 Drop table WorkerList
 Drop table Faculty
 Drop table Account
 Drop table Attendance
 Drop table ListEmail
+Drop table Request
+Drop table LateList
 */
 Select* from Faculty
 Select* from Account
 Select* from WorkerList
 Select* from Attendance
 Select* from ListEmail
+Select* from Request
+Select* from LateList
+
+SELECT id_worker,fullname,d_m FROM Attendance INNER JOIN WorkerList ON Attendance.id_worker = WorkerList.id WHERE id_faculty = 'CNTT01' AND shift_worked = 2 AND CONVERT(date,d_m) = '2023-04-03'
+
+SELECT id, fullname FROM WorkerList WHERE id NOT IN (
+	SELECT id_worker FROM Attendance WHERE id_faculty = 'CNTT01' AND shift_worked = 2 AND CONVERT(date,d_m) = '2023-04-03'
+)
+
+SELECT * FROM Attendance
+SELECT fullname, COUNT(id_worker) As attend
+FROM WorkerList FULL JOIN Attendance 
+ON Attendance.id_worker = WorkerList.id 
+AND id_faculty = 'CNTT01' AND MONTH(d_m) = 4 AND YEAR(d_m) = 2023
+GROUP BY fullname
+
 
 Insert into Faculty values ('CNTT01','Cong nghe thong tin 1'),
 						   ('CSKH01','Cham soc khanh hang 1')
 insert into Account values ('admin1', 'admin1', 1, 'deepit2507@gmail.com', 'admin1', 'CNTT01'),
 						   ('staff1', 'staff1', 0, 'minhvt223@gmail.com', 'staff1', 'CSKH01'),
 						   ('staff2', 'staff2', 0, 'khanhtho10122002@gmail.com', 'staff1', 'CNTT01')
-Insert into WorkerList values(1, 'Nguyen Hung', '2002-07-25', 'Hung01', 'CNTT01'),
+Insert into WorkerList values (5, 'Minh Tien', '2002-07-25', 'B', 'CNTT01'),
+							  (6, 'A', '2002-07-25', 'A', 'CNTT01'),
+						     (1, 'Nguyen Hung1', '2002-07-25', 'Hung01', 'CNTT01'),
 							 (2, 'Nguyen Khanh Tho', '2002-12-10', 'Tho01', 'CNTT01'),
 							 (3, 'Dinh Anh Quan', '2002-12-10', 'Quan01', 'CNTT01'),
 							 (4, 'Nguyen Phuc', '2002-05-27', 'Phuc02', 'CSKH01')
