@@ -40,9 +40,10 @@ create table ListEmail(
 create table Request(
 	id int primary key Identity(1,1),
 	id_attendance int not null,
-	detail nvarchar(50),
+	detail nvarchar(1000),
 	states nvarchar(50),
-	foreign key(id_attendance) References Attendance(id)
+	usernamesent nvarchar(30),
+	foreign key(usernamesent) References Account(username),
 )
 create table LateList(
 	id int primary key Identity(1,1),
@@ -53,6 +54,7 @@ create table LateList(
 	detail nvarchar(50),
 	foreign key (id_worker) References WorkerList(id),
 )
+
 /*
 Drop table WorkerList
 Drop table Faculty
