@@ -17,15 +17,16 @@ create table Account(
 	Foreign key (fid) References Faculty(id_faculty)
 )
 create table WorkerList(
-	id int not null primary key,
+	id int not null primary key Identity(1,1),
 	fullname nvarchar(50),
 	birth date,
+	salary float,
 	images nvarchar(30) not null,
 	fid nvarchar(50),
 	Foreign key (fid) References Faculty(id_faculty)
 )
 create table Attendance(
-	id int not null primary key,
+	id int not null primary key Identity(1,1),
 	id_worker int not null,
 	d_m datetime not null,
 	id_faculty nvarchar(50),
@@ -55,7 +56,6 @@ create table LateList(
 	foreign key (id_worker) References WorkerList(id),
 )
 
-/*
 Drop table WorkerList
 Drop table Faculty
 Drop table Account
@@ -63,7 +63,7 @@ Drop table Attendance
 Drop table ListEmail
 Drop table Request
 Drop table LateList
-*/
+
 Select* from Faculty
 Select* from Account
 Select* from WorkerList
@@ -85,26 +85,25 @@ ON Attendance.id_worker = WorkerList.id
 AND id_faculty = 'CNTT01' AND MONTH(d_m) = 4 AND YEAR(d_m) = 2023
 GROUP BY fullname
 
-
+insert into Request values(4,'Delete worker: Nguyen Khanh Tho, id=4, Date, 3-4-2023','Idle','staff2')
 Insert into Faculty values ('CNTT01','Cong nghe thong tin 1'),
 						   ('CSKH01','Cham soc khanh hang 1')
 insert into Account values ('admin1', 'admin1', 1, 'deepit2507@gmail.com', 'admin1', 'CNTT01'),
 						   ('staff1', 'staff1', 0, 'minhvt223@gmail.com', 'staff1', 'CSKH01'),
 						   ('staff2', 'staff2', 0, 'khanhtho10122002@gmail.com', 'staff1', 'CNTT01')
-Insert into WorkerList values (5, 'Minh Tien', '2002-07-25', 'B', 'CNTT01'),
-							  (6, 'A', '2002-07-25', 'A', 'CNTT01'),
-						     (1, 'Nguyen Hung1', '2002-07-25', 'Hung01', 'CNTT01'),
-							 (2, 'Nguyen Khanh Tho', '2002-12-10', 'Tho01', 'CNTT01'),
-							 (3, 'Dinh Anh Quan', '2002-12-10', 'Quan01', 'CNTT01'),
-							 (4, 'Nguyen Phuc', '2002-05-27', 'Phuc02', 'CSKH01')
-insert into Attendance values (1,1, '2023-04-03','CNTT01',1),
-							  (2,2, '2023-04-03','CNTT01',1),
-							  (3,3, '2023-04-03','CNTT01',1),
-							  (4,4, '2023-04-03','CNTT01',1),
-							  (5,1, '2023-04-03','CNTT01',2),
-							  (6,2, '2023-04-03','CNTT01',2),
-							  (7,3, '2023-04-03','CNTT01',2),
-							  (8,4, '2023-04-03','CNTT01',2)
+Insert into WorkerList values(N'Nguyễn Phúc Hưng', '2002-07-25',200000, N'Nguyễn Phúc Hưng1', 'CNTT01'),
+							 (N'Nguyễn Khánh Thọ', '2002-12-10',200000 , N'Nguyễn Khánh Thọ2', 'CNTT01'),
+							 (N'Đinh Anh Quân', '2002-12-10',200000 , N'Đinh Anh Quân3', 'CNTT01'),
+							 (N'Nguyễn Quang Hưng', '2002-05-27',200000, N'Nguyễn Quang Hưng4', 'CNTT01'),
+							 (N'Đặng Việt Anh', '2002-05-27',200000, N'Đặng Việt Anh5', 'CNTT01')
+insert into Attendance values (1, '2023-04-03','CNTT01',1),
+							  (2, '2023-04-03','CNTT01',1),
+							  (3, '2023-04-03','CNTT01',1),
+							  (4, '2023-04-03','CNTT01',1),
+							  (1, '2023-04-03','CNTT01',2),
+							  (2, '2023-04-03','CNTT01',2),
+							  (3, '2023-04-03','CNTT01',2),
+							  (4, '2023-04-03','CNTT01',2)
 
 insert into ListEmail values ('khanhtho10122002@gmail.com',N'Nguyễn Khánh Thọ - trưởng phòng CNTT1')
 
@@ -124,3 +123,11 @@ END
 SELECT d_m
 FROM Attendance
 WHERE MONTH(d_m) = 2 AND id=1
+
+declare @start int = 1;
+declare @end int =6;
+while @start <= @end
+Begin
+	delete from WorkerList where id= @start
+	set @start = @start +1
+end
